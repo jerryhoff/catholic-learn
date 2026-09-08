@@ -28,7 +28,7 @@ export function usePlayer(phrases: Phrase[], activeTag: string | null): UsePlaye
     continuous: true,
     musicEnabled: true,
     musicVolume: 0.02,
-    phraseVolume: 0.55,
+    phraseVolume: 0.6,
   });
 
   const [isPlaying, setIsPlaying] = useState(false);
