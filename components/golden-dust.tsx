@@ -44,7 +44,7 @@ export function GoldenDust() {
         y: Math.random() * canvas!.height,
         size: 0.5 + Math.random() * 1.5,
         opacity: 0,
-        maxOpacity: 0.06 + Math.random() * 0.12,
+        maxOpacity: 0.15 + Math.random() * 0.25,
         vx: (Math.random() - 0.5) * 0.3,
         vy: (Math.random() - 0.5) * 0.2 - 0.1, // slight upward drift
         life: 0,

@@ -59,8 +59,8 @@
   }
 }
 
-.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide, main { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar, main::-webkit-scrollbar { display: none; }
 .safe-top { padding-top: env(safe-area-inset-top); }
 
 @keyframes shimmer {
