@@ -43,11 +43,6 @@ export default function PlayerPage() {
               transitioning ? "opacity-0 blur-md scale-[0.97]" : "opacity-100 blur-0 scale-100"
             }`}
           >
-            {currentLanguage && (
-              <p className="text-xs text-amber-400 animate-pulse">
-                <Volume2 className="w-3 h-3 inline -mt-0.5" />
-              </p>
-            )}
 
             <div className="space-y-4 w-full">
               {currentPhrase.italian && (
