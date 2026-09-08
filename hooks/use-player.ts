@@ -24,7 +24,7 @@ export function usePlayer(phrases: Phrase[], activeTag: string | null): UsePlaye
     languageOrder: ["japanese", "english"],
     pauseBetweenLanguages: 3,
     pauseBetweenPhrases: 3,
-    shuffle: false,
+    shuffle: true,
     continuous: true,
     musicEnabled: true,
     musicVolume: 0.01,
@@ -269,6 +269,13 @@ export function usePlayer(phrases: Phrase[], activeTag: string | null): UsePlaye
     // Only trigger on isPlaying changes, not currentIndex
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPlaying]);
+
+  // Listen for stop-player event (e.g., when navigating to verses)
+  useEffect(() => {
+    const handler = () => pause();
+    window.addEventListener("stop-player", handler);
+    return () => window.removeEventListener("stop-player", handler);
+  }, [pause]);
 
   // Cleanup on unmount
   useEffect(() => {

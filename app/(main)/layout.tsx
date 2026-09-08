@@ -14,7 +14,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-col min-h-[100dvh] relative">
+    <div className="flex flex-col h-[100dvh] relative">
       {/* Background image */}
       <div
         className="fixed inset-0 z-0 bg-cover"
@@ -47,6 +47,11 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={() => {
+                  if (item.href === "/verses") {
+                    window.dispatchEvent(new Event("stop-player"));
+                  }
+                }}
                 className={cn(
                   "flex-1 flex flex-col items-center gap-0.5 pt-2 pb-1 text-[10px] font-medium transition-colors active:scale-95",
                   isActive

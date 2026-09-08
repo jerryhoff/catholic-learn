@@ -43,14 +43,11 @@ export default function PlayerPage() {
               transitioning ? "opacity-0 blur-md scale-[0.97]" : "opacity-100 blur-0 scale-100"
             }`}
           >
-            <p className="text-xs text-amber-100/30 tabular-nums">
-              {currentIndex + 1} / {totalWithAudio}
-              {currentLanguage && (
-                <span className="ml-2 text-amber-400 animate-pulse">
-                  <Volume2 className="w-3 h-3 inline -mt-0.5" />
-                </span>
-              )}
-            </p>
+            {currentLanguage && (
+              <p className="text-xs text-amber-400 animate-pulse">
+                <Volume2 className="w-3 h-3 inline -mt-0.5" />
+              </p>
+            )}
 
             <div className="space-y-4 w-full">
               {currentPhrase.italian && (
@@ -81,7 +78,7 @@ export default function PlayerPage() {
             {currentPhrase.reference && (
               <div className="space-y-0.5">
                 <p className="text-xs text-amber-400/50 font-serif italic tracking-wide">
-                  — {translateReference(currentPhrase.reference)}
+                  {translateReference(currentPhrase.reference)}
                 </p>
                 <p className="text-[10px] text-amber-100/30 font-serif tracking-wide">
                   {currentPhrase.reference}
