@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { BookOpen, Headphones } from "lucide-react";
+import { GoldenDust } from "@/components/golden-dust";
 
 const navItems = [
   { href: "/player", label: "Listen", icon: Headphones },
@@ -21,6 +22,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
         style={{ backgroundPosition: "60% center", backgroundImage: "url(/catholic_mockups/church.png)" }}
       />
       <div className="fixed inset-0 z-0 bg-black/70" />
+      <GoldenDust />
 
       {/* Header */}
       <header className="relative z-10 border-b border-amber-500/10 bg-black/30 backdrop-blur-md sticky top-0 safe-top">
