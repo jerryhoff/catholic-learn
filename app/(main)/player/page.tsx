@@ -123,7 +123,7 @@ export default function PlayerPage() {
           </button>
           {settings.musicEnabled && (
             <button onClick={skipTrack}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium transition-all active:scale-95 border text-amber-100/30 border-amber-500/10">
+              className="flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium transition-all active:scale-95 border text-amber-400 border-amber-500/20 bg-amber-500/10">
               <SkipForward className="w-3.5 h-3.5" />
               Next Song
             </button>
