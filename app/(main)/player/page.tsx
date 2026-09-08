@@ -25,7 +25,7 @@ export default function PlayerPage() {
     toggle, skip, settings, setSettings, filteredPhrases,
   } = usePlayer(allPhrases, activeTag);
 
-  useMusic(settings.musicEnabled && isPlaying, settings.musicVolume);
+  const { skipTrack } = useMusic(settings.musicEnabled && isPlaying, settings.musicVolume);
 
   const subTags = Array.from(new Set(allPhrases.flatMap((p) => p.tags.filter((t) => t !== "catholic")))).sort();
   const totalWithAudio = filteredPhrases.length;
@@ -118,7 +118,7 @@ export default function PlayerPage() {
           </button>
         </div>
 
-        <div className="flex justify-center">
+        <div className="flex justify-center gap-2">
           <button onClick={() => setSettings((s) => ({ ...s, musicEnabled: !s.musicEnabled }))}
             className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium transition-all active:scale-95 border ${
               settings.musicEnabled ? "text-amber-400 border-amber-500/20 bg-amber-500/10" : "text-amber-100/30 border-amber-500/10"
@@ -126,6 +126,13 @@ export default function PlayerPage() {
             {settings.musicEnabled ? <Music className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
             {settings.musicEnabled ? "Music On" : "Music Off"}
           </button>
+          {settings.musicEnabled && (
+            <button onClick={skipTrack}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium transition-all active:scale-95 border text-amber-100/30 border-amber-500/10">
+              <SkipForward className="w-3.5 h-3.5" />
+              Next Song
+            </button>
+          )}
         </div>
 
         {subTags.length > 0 && (

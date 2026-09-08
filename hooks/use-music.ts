@@ -1,15 +1,26 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 
 const TRACKS = [
-  "/music/guitar1.mp3",
-  "/music/guitar2.mp3",
-  "/music/guitar3.mp3",
-  "/music/guitar4.mp3",
+  "/music/catholicrelax-adoration-in-quiet-stones-469602.mp3",
+  "/music/catholicrelax-annunciation-light-465256.mp3",
+  "/music/catholicrelax-ave-maria-gratia-plena-472895.mp3",
+  "/music/catholicrelax-even-breath-466145.mp3",
+  "/music/catholicrelax-gentle-flow-of-merciful-waters-466082.mp3",
+  "/music/catholicrelax-little-boat-into-silence-4-471290.mp3",
+  "/music/catholicrelax-oratio-sanctissimi-domini-nostri-479982.mp3",
+  "/music/catholicrelax-quiet-boat-to-silence-471287.mp3",
+  "/music/catholicrelax-quiet-refuge-in-his-presence-465257.mp3",
+  "/music/catholicrelax-regina-cli-ltare-alleluia-472901.mp3",
+  "/music/catholicrelax-relaxing-solo-piano-calm-ambient-music-for-study-amp-sleep-462679.mp3",
+  "/music/catholicrelax-serene-reflections-462683.mp3",
+  "/music/catholicrelax-still-lake-at-dusk-462708.mp3",
+  "/music/catholicrelax-whispers-of-tranquility-462685.mp3",
+  "/music/nickpanek-gregorian-chant-private-prayer-to-mary-337672.mp3",
 ];
 
-// Module-level singletons so React strict mode doesn't duplicate
+// Module-level singletons
 let audioCtx: AudioContext | null = null;
 let gainNode: GainNode | null = null;
 let audioEl: HTMLAudioElement | null = null;
@@ -37,6 +48,15 @@ function init() {
 export function useMusic(enabled: boolean, volume: number) {
   const prevEnabled = useRef(false);
 
+  const skipTrack = useCallback(() => {
+    init();
+    trackIndex = (trackIndex + 1) % TRACKS.length;
+    audioEl!.src = TRACKS[trackIndex];
+    if (gainNode) gainNode.gain.value = volume;
+    if (audioCtx?.state === "suspended") audioCtx.resume();
+    audioEl!.play().catch(() => {});
+  }, [volume]);
+
   useEffect(() => {
     init();
     gainNode!.gain.value = volume;
@@ -53,4 +73,6 @@ export function useMusic(enabled: boolean, volume: number) {
 
     prevEnabled.current = enabled;
   }, [enabled, volume]);
+
+  return { skipTrack };
 }
