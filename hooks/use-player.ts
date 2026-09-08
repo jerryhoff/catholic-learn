@@ -165,26 +165,38 @@ export function usePlayer(phrases: Phrase[], activeTag: string | null): UsePlaye
   }, [getAudioUrl, playAudioFile, wait]);
 
   // Main playback loop
+  // Build a shuffled order that plays all phrases before repeating
+  const buildShuffleOrder = useCallback((count: number): number[] => {
+    const indices = Array.from({ length: count }, (_, i) => i);
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [indices[i], indices[j]] = [indices[j], indices[i]];
+    }
+    return indices;
+  }, []);
+
   const playLoop = useCallback(async (startIndex: number) => {
+    const available = playablePhrases;
+    if (available.length === 0) {
+      setIsPlaying(false);
+      return;
+    }
+
+    let shuffleOrder = buildShuffleOrder(available.length);
+    let shufflePos = 0;
     let idx = startIndex;
 
     while (isPlayingRef.current) {
       const s = settingsRef.current;
-      const available = playablePhrases;
-      if (available.length === 0) {
-        setIsPlaying(false);
-        return;
-      }
 
-      // Clamp index
       idx = idx % available.length;
 
-      // Set phrase (text updates while still blurred from previous cycle, or first phrase)
+      // Set phrase
       setCurrentIndex(idx);
 
       // Blur in
       setTransitioning(false);
-      await wait(800); // wait for blur-in to complete
+      await wait(800);
 
       if (!isPlayingRef.current) return;
 
@@ -210,7 +222,13 @@ export function usePlayer(phrases: Phrase[], activeTag: string | null): UsePlaye
 
       // Next phrase
       if (s.shuffle) {
-        idx = Math.floor(Math.random() * available.length);
+        shufflePos++;
+        if (shufflePos >= shuffleOrder.length) {
+          // All played — reshuffle
+          shuffleOrder = buildShuffleOrder(available.length);
+          shufflePos = 0;
+        }
+        idx = shuffleOrder[shufflePos];
       } else {
         idx = idx + 1;
         if (idx >= available.length) {
@@ -223,7 +241,7 @@ export function usePlayer(phrases: Phrase[], activeTag: string | null): UsePlaye
         }
       }
     }
-  }, [playablePhrases, playPhrase, wait]);
+  }, [playablePhrases, playPhrase, wait, buildShuffleOrder]);
 
   const play = useCallback(() => {
     setIsPlaying(true);
