@@ -25,8 +25,8 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
       {/* Header */}
       <header className="relative z-10 border-b border-amber-500/10 bg-black/30 backdrop-blur-md sticky top-0 safe-top">
         <div className="px-4 h-12 flex items-center justify-center">
-          <Link href="/" className="text-lg font-serif font-bold tracking-wide text-amber-100/50">
-            Catholic<span className="text-amber-400/50">Learn</span>
+          <Link href="/" className="text-lg font-serif font-bold tracking-wide shimmer-gold-subtle">
+            CatholicLearn
           </Link>
         </div>
       </header>
